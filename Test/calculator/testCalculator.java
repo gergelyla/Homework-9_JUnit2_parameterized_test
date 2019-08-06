@@ -4,6 +4,7 @@ import calculator.objectDefinitions.Calculator;
 import calculator.operations.UnitMeasures;
 import calculator.operations.ValidationException;
 import org.junit.*;
+
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.rules.ExpectedException;
@@ -30,19 +31,21 @@ public class testCalculator {
     @Before
     public void setup() {
         System.out.println("in setup");
-        calculator=new Calculator("33m-12cm", UnitMeasures.M);
+        calculator = new Calculator("33m-12cm", UnitMeasures.M);
     }
 
     @After
-    public void after(){System.out.println("after");}
-
-    @Test
-    public void testCalculateDistance()throws ValidationException {
-        assertThat(calculator.calculateDistance(),is(32.88));
+    public void after() {
+        System.out.println("after");
     }
 
-    @Test(expected=ValidationException.class)
-    public void testCalculateDistanceWhenResultNegative()throws ValidationException{
+    @Test
+    public void testCalculateDistance() throws ValidationException {
+        assertThat(calculator.calculateDistance(), is(32.88));
+    }
+
+    @Test(expected = ValidationException.class)
+    public void testCalculateDistanceWhenResultNegative() throws ValidationException {
         calculator.setExpression("1m-200cm");
         calculator.calculateDistance();
         fail("resulting distance negative!");

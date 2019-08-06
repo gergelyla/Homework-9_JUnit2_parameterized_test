@@ -23,22 +23,22 @@ public class parameterizedTestCalculator {
 
     @Parameterized.Parameters
     public static List<Object> data() {
-        return Arrays.asList(new Object[][] {
-                {"33m-12cm",UnitMeasures.M, 32.88},
-                {"10m+30dm-20cm+1km",UnitMeasures.M, 1012.8},
-                {"2m-20cm+10dm",UnitMeasures.CM, 280}
+        return Arrays.asList(new Object[][]{
+                {"33m-12cm", UnitMeasures.M, 32.88},
+                {"10m+30dm-20cm+1km", UnitMeasures.M, 1012.8},
+                {"2m-20cm+10dm", UnitMeasures.CM, 280}
         });
     }
 
-    public parameterizedTestCalculator(String expression, UnitMeasures unitMeasures,double expected) {
+    public parameterizedTestCalculator(String expression, UnitMeasures unitMeasures, double expected) {
         this.expression = expression;
-        this.unitMeasures=unitMeasures;
+        this.unitMeasures = unitMeasures;
         this.expected = expected;
     }
 
     @Test
     public void testDistanceCalculator() throws ValidationException {
-        calculator=new Calculator(expression,unitMeasures);
+        calculator = new Calculator(expression, unitMeasures);
 
         assertEquals(calculator.calculateDistance(), expected);
     }
