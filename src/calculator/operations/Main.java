@@ -1,8 +1,13 @@
 package calculator.operations;
 
 
+import calculator.objectDefinitions.CalculationDurationRepository;
 import calculator.objectDefinitions.Calculator;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static calculator.operations.UnitMeasures.*;
@@ -15,7 +20,7 @@ public class Main {
         } catch (ValidationException e) {
             System.out.println(e);
         }
-
+        System.out.println("Duration: "+distance.getDuration());
     }
 
     private static Calculator inputExpression() {

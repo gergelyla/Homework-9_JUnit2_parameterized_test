@@ -3,6 +3,8 @@ package calculator.objectDefinitions;
 import calculator.operations.UnitMeasures;
 import calculator.operations.ValidationException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Calculator implements ICalculator {
     private String expression;
     private UnitMeasures resultUnitMeasure;
     private Distance distance;
+    private Duration duration;
 
     public Calculator(String expression, UnitMeasures resultUnitMeasure) {
         this.expression = expression;
@@ -33,8 +36,27 @@ public class Calculator implements ICalculator {
         this.resultUnitMeasure = resultUnitMeasure;
     }
 
+    public Distance getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Distance distance) {
+        this.distance = distance;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    CalculationDurationRepository<Calculator> calculationDuration;
 
     public double calculateDistance() throws ValidationException {
+        CalculationDurationRepository calculationDuration=new CalculationDurationRepository<>();
+        Instant start=Instant.now();
         double calculatedDistance = 0;
         List<Distance> listOfDistances = new ArrayList<>();
         listOfDistances = breakUpExpressionInDistanceData(listOfDistances);
@@ -53,6 +75,10 @@ public class Calculator implements ICalculator {
         if (calculatedDistance < 0) {
             throw new ValidationException("Resulting distance negative!");
         }
+        Instant stop=Instant.now();
+        Duration durationOfCalculation= Duration.between(start,stop);
+        setDuration(durationOfCalculation);
+        calculationDuration.addDuration(getDuration());
         return calculatedDistance;
     }
 
